@@ -1,0 +1,98 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node{
+	int data;
+	struct node *left;
+	struct node *right;
+};
+struct node * newnode(int data)
+{
+	struct node * temp=(struct node*)malloc(sizeof(struct node*));
+	temp->data=data;
+	temp->left=NULL;
+	temp->right=NULL;
+	return temp;
+}
+struct node * insert(struct node *my_node,int data)
+{
+	if(my_node==NULL)
+	{
+		return newnode(data);
+	}
+	else
+	{
+		if(data<my_node->data)
+		  my_node->left=insert(my_node->left,data);
+		else{
+		  my_node->right=insert(my_node->right,data);
+	    }
+	    return my_node;
+	}
+}
+void inorder(struct node *my_node)
+{
+	if(my_node!=NULL)
+	{
+		inorder(my_node->left);
+		printf("%d ",my_node->data);
+		inorder(my_node->right);
+	}
+}
+void preorder(struct node *my_node)
+{
+	if(my_node!=NULL)
+	{
+		printf("%d ",my_node->data);
+		preorder(my_node->left);
+		preorder(my_node->right);
+	}
+}
+void postorder(struct node *my_node)
+{
+	if(my_node!=NULL)
+	{
+		postorder(my_node->left);
+		postorder(my_node->right);
+		printf("%d ",my_node->data);
+	}
+}
+int main()
+{
+	printf("\n binary search tree:");
+	struct node *root=NULL;
+	while(1)
+	{
+		int ch;
+		printf("\n1.insert\n2.inorder\n3.preorder\n4.postorder\n5.exit");
+		scanf("%d",&ch);
+		switch(ch)
+		{
+			case 1:
+				int value;
+				printf("\nenter the value");
+				scanf("%d",&value);
+				root=insert(root,value);
+				printf("\nvalue inserted");
+				break;
+			case 2:
+				printf("\ninorder element:");
+				inorder(root);
+				printf("\n");
+				break;
+			case 3:
+				printf("\npreorder element:");
+				preorder(root);
+				printf("\n");
+				break;
+			case 4:
+				printf("\npostorder element:");
+				postorder(root);
+				printf("\n");
+				break;
+			case 5:
+				exit(1);
+			default:
+				printf("\ninvalid");
+		}
+	}
+}
